@@ -1,7 +1,9 @@
 import React from "react";
-import {Router} from "./components/Router";
+import { Router } from "./components/Router";
 import { AppContainer } from "./pages/styled";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import DateFnsUtils from '@date-io/date-fns';
 
 const meuTema = createMuiTheme({
   palette: {
@@ -18,11 +20,13 @@ const meuTema = createMuiTheme({
 })
 
 function App() {
-  return(
+  return (
     <MuiThemeProvider theme={meuTema}>
-      <AppContainer>
-        <Router />
-      </AppContainer>
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <AppContainer>
+          <Router />
+        </AppContainer>
+      </MuiPickersUtilsProvider>
     </MuiThemeProvider>
   );
 }

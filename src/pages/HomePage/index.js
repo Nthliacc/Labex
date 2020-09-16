@@ -17,16 +17,12 @@ export const HomePage = () => {
     const goToLoginPage = () => {
         history.push("/login")
     };
-    const goToSignupPage = () => {
-        history.push("/signup")
-    };
     const onClickReservar = () => {
         history.push(`/inscricao`);
     };
     return (
         <HomeContainer>
             <NavHome>
-                <ButtonLogin className={classes.button} variant="contained" color={'primary'} onClick={goToSignupPage}>Criar Login</ButtonLogin>
                 <ButtonLogin variant="contained" color={'primary'} onClick={goToLoginPage}>Fazer Login</ButtonLogin>
             </NavHome>
             <BodyHome>

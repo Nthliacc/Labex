@@ -6,44 +6,32 @@ import {
   InputCriarViagem,
 } from "../../../styled";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
 import { useForm } from "../../../../components/Hooks";
+import { useProtectedPage } from "../../../../components/Hooks/useProtectedPage";
+import { KeyboardDatePicker } from "@material-ui/pickers";
 
 export const CreateTripsPage = () => {
-  const { form, onChange } = useForm({
-    nome: "",
-    planeta: "",
-    data: "",
-    descricao: "",
-    duracao: "",
+  const [form, onChange] = useForm({
+    name: "",
+    planet: "",
+    date: "",
+    description: "",
+    durationInDays: "",
   });
 
-  const onChangeValor = (ev) => {
-    const { value, name } = ev.target;
+  useProtectedPage();
 
-    onChange(name, value);
-  };
+  const [date, setDate] = useState(new Date());
 
   const onSubmitForm = (ev) => {
     ev.preventDefault();
-
-    console.log(form);
-  };
-
-  const history = useHistory()
-
-  const onClickCriarViagem = () => {
-    const token = localStorage.getItem("token");
-    if (token === null) {
-      history.push("/");
-    }
-
+    const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
     const body = {
-      name: form.nome,
-      planet: form.planeta,
-      date: form.data,
-      description: form.descricao,
-      durationInDays: form.duracao,
+      name: form.name,
+      planet: form.planet,
+      date: formattedDate,
+      description: form.description,
+      durationInDays: form.durationInDays,
     };
 
     axios
@@ -52,14 +40,10 @@ export const CreateTripsPage = () => {
         body,
         {
           headers: {
-            "Content-Type": "application/json",
-            auth:
-              `${token}`,
-          },
+            auth: window.localStorage.getItem('token')
+          }
         }
-      )
-      .then((resposta) => {
-        console.log(resposta.data.trip);
+      ).then((resposta) => {
         alert(`Sua Viagem ${form.nome}, foi criada com sucesso!`);
       })
       .catch((error) => {
@@ -73,22 +57,17 @@ export const CreateTripsPage = () => {
       <FormCriarViagem onSubmit={onSubmitForm}>
         <h2>Create Trips Page</h2>
         <InputCriarViagem
-          value={form.nome}
-          name="nome"
-          type={"text"}
-          InputProps={{
-            pattern: "[A-Za-z ]{5,}",
-            title: "O nome deve conter 5 letras no mínimo"
-          }}
+          name={'name'}
+          value={form['name']}
           label={"Nome"}
-          onChange={onChangeValor}
+          onChange={onChange}
           required={true}
         />
         <InputCriarViagem select
-          value={form.planeta}
-          name="planeta"
+          value={form['planet']}
+          name={"planet"}
           label={"Planeta"}
-          onChange={onChangeValor}
+          onChange={onChange}
           required={true}>
           <option value={"Mercúrio"}>Mercúrio</option>
           <option value={"Vênus"}>Vênus</option>
@@ -98,41 +77,41 @@ export const CreateTripsPage = () => {
           <option value={"Urano"}>Urano</option>
           <option value={"Neturno"}>Neturno</option>
         </InputCriarViagem>
+        <KeyboardDatePicker
+          disableToolbar
+          variant="inline"
+          format="dd/MM/yyyy"
+          margin="normal"
+          label="Data"
+          value={date}
+          onChange={date => setDate(date)} />
         <InputCriarViagem
-          value={form.data}
-          name="data"
-          type="date"
-          defaultValue={new Date('')}
-          onChange={onChangeValor}
-          required={true} />
-        <InputCriarViagem
-          value={form.duracao}
-          name="duracao"
+          value={form['durationInDays']}
+          name={"durationInDays"}
           type={"number"}
           InputProps={{
             pattern: "[A-Za-z ]{50,}",
             title: "A duração deve conter no mínimo 50 dias"
           }}
           label={"Duração em dias"}
-          onChange={onChangeValor}
+          onChange={onChange}
           required={true}
         />
         <InputCriarViagem
-          value={form.descricao}
-          name="descricao"
+          value={form['description']}
+          name={"description"}
           type={"text"}
           InputProps={{
             pattern: "[A-Za-z ]{30,}",
             title: "A descrição deve conter 30 letras no mínimo"
           }}
           label={"Descrição"}
-          onChange={onChangeValor}
+          onChange={onChange}
           required={true} />
         <ButtonCriarViagem
           variant="contained"
           color={"primary"}
           type={'submit'}
-          onClick={onClickCriarViagem}
         >
           Criar Viagem
         </ButtonCriarViagem>

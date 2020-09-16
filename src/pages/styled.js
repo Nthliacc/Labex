@@ -59,10 +59,11 @@ export const LoginContainer = styled.div`
 export const FabLogin = styled(Fab)`
     align-self: flex-start;
 `;
-export const ImgLogoLogin = styled.img`
-    height: 100px;
+export const Img = styled.img`
+    height: 30%;
     display: flex;
     justify-self: flex-start;
+    border-radius: 50px;
 `;
 export const TextLogin = styled.h1`
     color: black;

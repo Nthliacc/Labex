@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import {TripInfoCard} from './TripInfoCard';
 import { CandidatesList } from './CandidatesList';
-import { ContentContainer } from './styled';
+import { ContentContainer, Title } from './styled';
 import { useProtectedPage } from '../../../../components/Hooks/useProtectedPage';
 
 export const TripDetailPage = () => {
@@ -13,7 +13,7 @@ export const TripDetailPage = () => {
   useProtectedPage();
 
   const getTripDetail = () => {
-    axios.get(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/gabarito/trip/${params.tripId}`, {
+    axios.get(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/nathalia-julian/trip/${params.tripId}`, {
       headers: {
         auth: window.localStorage.getItem('token')
       }
@@ -41,7 +41,7 @@ export const TripDetailPage = () => {
   }
 
   return <div>
-    <h2>Detalhes da viagem</h2>
+    <Title>Detalhes da viagem</Title>
     {trip ? <ContentContainer>
       <TripInfoCard info={trip}/>
       <CandidatesList 

@@ -1,7 +1,5 @@
 import React from "react";
 import { Switch, Route, BrowserRouter } from "react-router-dom";
-
-import { SignupPage } from "../../pages/SignupPage";
 import { LoginPage } from "../../pages/LoginPage";
 import { LogoutPage } from "../../pages/LogoutPage";
 import { HomePage } from "../../pages/HomePage";
@@ -21,9 +19,6 @@ export const Router = () => {
         </Route>
         <Route exact path="/inscricao" >
           <InscricaoPage />
-        </Route>
-        <Route exact path="/signup">
-          <SignupPage />
         </Route>
         <Route exact path="/login">
           <LoginPage />
